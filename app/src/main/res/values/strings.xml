@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">MVVM starter</string>
+    <string name="app_name" translatable="false">MVVM starter</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
