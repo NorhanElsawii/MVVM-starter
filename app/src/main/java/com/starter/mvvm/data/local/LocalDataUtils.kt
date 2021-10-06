@@ -9,6 +9,12 @@ class LocalDataUtils @Inject constructor(@ApplicationContext private val context
 
     val sharedPrefsUtils = SharedPrefsUtils.getInstance(context)
 
+    @Inject
+    lateinit var connectivityUtils: ConnectivityUtils
+
+
+    fun isNetworkConnected() = connectivityUtils.isConnectedToNetwork()
+
     fun getString(id: Int): String {
         return context.getString(id)
     }

@@ -1,18 +1,18 @@
 package com.starter.mvvm.utils.base
 
-import com.starter.mvvm.data.local.ConnectivityUtils
 import com.starter.mvvm.data.local.LocalDataUtils
 import javax.inject.Inject
 
+/**
+ * Created by Norhan Elsawi on 4/10/2021.
+ */
 abstract class BaseRepository {
-    @Inject
-    lateinit var connectivityUtils: ConnectivityUtils
 
     @Inject
     lateinit var localDataUtils: LocalDataUtils
 
     fun isNetworkConnected(): Boolean {
-        return connectivityUtils.isConnectedToNetwork()
+        return localDataUtils.isNetworkConnected()
     }
 
     fun getString(id: Int): String {

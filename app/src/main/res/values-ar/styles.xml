@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:windowBackground">@color/white</item>
+        <!--        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>-->
+        <!--        <item name="android:fontFamily">@font/main_font_arabic</item>-->
+    </style>
+
+    <style name="AlerterCustomTextAppearance" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <!--        <item name="android:fontFamily">@font/main_font_arabic</item>-->
+    </style>
+
+</resources>

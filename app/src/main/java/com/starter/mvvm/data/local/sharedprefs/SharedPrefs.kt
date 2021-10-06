@@ -185,5 +185,4 @@ class SharedPrefs(private val pref: SharedPreferences) {
     fun clearData() {
         pref.edit().clear().apply()
     }
-
 }

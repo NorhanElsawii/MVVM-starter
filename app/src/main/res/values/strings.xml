@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">MVVM starter</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="check_internet_connection">Check your internet connection</string>
+    <string name="some_thing_went_wrong_error_msg">Something went wrong, Please try again</string>
+    <string name="please_click_to_retry">Tap to retry</string>
 
 </resources>

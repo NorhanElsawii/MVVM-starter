@@ -47,6 +47,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -55,11 +58,9 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.1")
 
-
     //testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0'")
 
     //dagger
     implementation("com.google.dagger:hilt-android:2.39.1")
@@ -71,10 +72,33 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.6.0")
+
+    //rxjava
+    implementation("io.reactivex.rxjava2:rxjava:2.2.10")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.10.0")
 
     //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
+
+    //viewmodel
+    implementation("android.arch.lifecycle:extensions:1.1.1")
+    implementation("android.arch.lifecycle:viewmodel:1.1.1")
+
+    //others
+    implementation("com.github.tapadoo:alerter:7.2.4")
+    implementation("com.intuit.sdp:sdp-android:1.0.6")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
+
+    //paging
+    implementation("android.arch.paging:runtime:1.0.1")
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
+
 }
 
 // Allow references to generated code
