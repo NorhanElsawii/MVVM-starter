@@ -10,4 +10,7 @@ class UserApiCall @Inject constructor(retrofit: Retrofit) {
 
     fun getUserList(page: Int) =
         userApi.getUserList(page)
+
+    fun getUser(id: Int) =
+        userApi.getUser(id)
 }

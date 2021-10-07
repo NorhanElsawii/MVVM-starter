@@ -94,6 +94,7 @@ dependencies {
     implementation("com.github.tapadoo:alerter:7.2.4")
     implementation("com.intuit.sdp:sdp-android:1.0.6")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     //paging
     implementation("android.arch.paging:runtime:1.0.1")

@@ -1,4 +1,4 @@
-package com.asala.asala.utils
+package com.starter.mvvm.utils
 
 
 /**

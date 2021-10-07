@@ -21,6 +21,7 @@ import io.reactivex.schedulers.Schedulers
 abstract class BaseViewModel(private val repository: BaseRepository) : ViewModel() {
 
     val showLoginDialog = SingleLiveEvent<Boolean>()
+    val showNetworkError = SingleLiveEvent<Boolean>()
     private val compositeDisposable = CompositeDisposable()
 
     fun <D, E> subscribe(
@@ -71,6 +72,20 @@ abstract class BaseViewModel(private val repository: BaseRepository) : ViewModel
     fun getCurrentLanguage() = repository.getCurrentLanguage()
 
     fun setLanguage(language: String) = repository.setLanguage(language)
+
+    fun isNetworkConnected(): Boolean {
+        val isNetworkConnected = repository.isNetworkConnected()
+        if (!isNetworkConnected)
+            this.showNetworkError.postValue(true)
+        return isNetworkConnected
+    }
+
+//    fun isUserLogin(showLoginPopUp: Boolean = true): Boolean {
+//        val isUserLogin = repository.isUserLogin()
+//        if (!isUserLogin && showLoginPopUp)
+//            this.showLoginDialog.postValue(true)
+//        return isUserLogin
+//    }
 
     fun addSubscription(disposable: Disposable) {
         compositeDisposable.add(disposable)

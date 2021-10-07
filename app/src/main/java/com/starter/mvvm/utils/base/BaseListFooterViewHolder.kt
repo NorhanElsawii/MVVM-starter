@@ -2,9 +2,9 @@ package com.starter.mvvm.utils.base
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.asala.asala.utils.RetryListener
 import com.starter.mvvm.databinding.ItemPagedListFooterBinding
 import com.starter.mvvm.utils.PagedListFooterType
+import com.starter.mvvm.utils.RetryListener
 
 /**
  * Created by Norhan Elsawi on 23/01/2020.

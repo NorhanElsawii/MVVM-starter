@@ -18,7 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,LockedOrientationActivity"
         tools:replace="android:allowBackup">
-
+        <activity
+            android:name=".ui.details.container.DetailsActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.main.container.MainActivity"
             android:exported="true">

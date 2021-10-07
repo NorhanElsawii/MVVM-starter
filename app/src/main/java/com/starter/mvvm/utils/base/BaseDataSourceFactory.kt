@@ -21,8 +21,8 @@ abstract class BaseDataSourceFactory<I, DS : BaseDataSource<I>> :
         dataSource?.retry()
     }
 
-    fun refresh() {
-        dataSource?.invalidate()
+    fun refresh(isForce: Boolean = false) {
+        dataSource?.invalidate(isForce)
     }
 
     fun onCleared() {

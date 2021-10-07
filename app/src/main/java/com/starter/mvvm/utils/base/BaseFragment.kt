@@ -19,7 +19,11 @@ import com.tapadoo.alerter.Alerter
 /**
  * Created by Norhan Elsawi on 4/10/2021.
  */
-abstract class BaseFragment<VB : ViewBinding> : Fragment() {
+typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
+
+abstract class BaseFragment<VB : ViewBinding>(
+    private val inflate: Inflate<VB>,
+) : Fragment() {
 
     private var _binding: VB? = null
 
@@ -29,11 +33,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     private lateinit var pd: Dialog
 
-    abstract fun initViewModel(): BaseViewModel?
-
-    abstract fun setupViewBinding(
-        inflater: LayoutInflater, container: ViewGroup?,
-    ): VB
+    abstract fun getCurrentViewModel(): BaseViewModel?
 
     abstract fun onViewReady()
 
@@ -42,7 +42,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = setupViewBinding(inflater, container)
+        _binding = inflate.invoke(inflater, container, false)
         return requireNotNull(_binding).root
     }
 
@@ -53,8 +53,11 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     private fun initListeners() {
-        observe(initViewModel()?.showLoginDialog) {
+        observe(getCurrentViewModel()?.showLoginDialog) {
             showLoginDialog()
+        }
+        observe(getCurrentViewModel()?.showNetworkError) {
+            showErrorMsg(getString(R.string.check_internet_connection))
         }
     }
 
@@ -154,7 +157,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         else if (showErrorMsg)
             showErrorMsg(errorResponse.message)
 
-        handleError()
+        if (!errorResponse.showOnlyErrorMsg)
+            handleError.invoke()
     }
 
     private fun handleForceUpdate() {

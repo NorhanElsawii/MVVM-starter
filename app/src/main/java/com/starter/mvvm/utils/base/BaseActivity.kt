@@ -3,19 +3,20 @@ package com.starter.mvvm.utils.base
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewbinding.ViewBinding
+import com.starter.mvvm.databinding.ActivityCommonBinding
 import com.starter.mvvm.utils.locale.LocaleHelper
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
  * Created by Norhan Elsawi on 10/04/2021.
  */
-abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
+@AndroidEntryPoint
+abstract class BaseActivity : AppCompatActivity() {
 
     // Variables
-    private var _binding: VB? = null
+    private var _binding: ActivityCommonBinding? = null
 
     // Binding variable to be used for accessing views.
     protected val binding
@@ -23,11 +24,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     abstract fun onViewCreated()
 
-    abstract fun setupViewBinding(inflater: LayoutInflater): VB
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = setupViewBinding(layoutInflater)
+        _binding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(requireNotNull(_binding).root)
         onViewCreated()
         overridePendingTransition(getStartAnimation(), android.R.anim.fade_out)

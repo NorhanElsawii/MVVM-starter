@@ -34,7 +34,7 @@ class MainDataSource(
             {
                 callback.onResult(it ?: ArrayList(), params.key.toInt() + 1)
             },
-            false
+            true
         )
     }
 

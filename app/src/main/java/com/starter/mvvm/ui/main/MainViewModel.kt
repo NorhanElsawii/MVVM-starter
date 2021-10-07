@@ -18,16 +18,24 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     var pagedList: LiveData<PagedList<User>>? = null
     val status = SingleLiveEvent<Status>()
-    private lateinit var factory: MainDataSourceFactory
+    private var factory: MainDataSourceFactory? = null
 
     fun initPagedList() {
         factory = MainDataSourceFactory(mainRepository, status)
         pagedList =
-            LivePagedListBuilder(factory, PAGE_SIZE).build()
+            LivePagedListBuilder(requireNotNull(factory), PAGE_SIZE).build()
+    }
+
+    fun refresh() {
+        factory?.refresh()
+    }
+
+    fun retry() {
+        factory?.retry()
     }
 
     override fun onCleared() {
         super.onCleared()
-        factory.onCleared()
+        factory?.onCleared()
     }
 }

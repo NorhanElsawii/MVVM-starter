@@ -16,7 +16,7 @@ import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 
 /**
- * Created by Norhan Elsawi on 23/01/2020.
+ * Created by Norhan Elsawi on 7/010/2021.
  */
 abstract class BaseDataSource<I>(
     private val repository: BaseRepository,
@@ -94,16 +94,28 @@ abstract class BaseDataSource<I>(
         retry = action
     }
 
-    override fun invalidate() {
+    //isForce = true invalidate the view if no network (case search)
+    // isForce = false show only network error
+    fun invalidate(isForce: Boolean = false) {
+        if (isForce)
+            doInvalidate()
+        else if (!repository.isNetworkConnected())
+            setErrorWithEmptyErrorResponse<Any>(R.string.check_internet_connection, true)
+        else
+            doInvalidate()
+    }
+
+    private fun doInvalidate() {
         status = SingleLiveEvent()
         clearSubscription()
         super.invalidate()
     }
 
-    private fun <E> setErrorWithEmptyErrorResponse(msg: Int) {
+    private fun <E> setErrorWithEmptyErrorResponse(msg: Int, showOnlyErrorMsg: Boolean = false) {
         status.postValue(Status.Error(ErrorResponse<E>().also {
             it.message =
                 repository.getString(msg)
+            it.showOnlyErrorMsg = showOnlyErrorMsg
         }))
     }
 
@@ -117,5 +129,4 @@ abstract class BaseDataSource<I>(
     fun onCleared() {
         clearSubscription()
     }
-
 }

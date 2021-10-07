@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.asala.asala.utils.RetryListener
 import com.starter.mvvm.data.remote.entites.User
 import com.starter.mvvm.databinding.ItemPagedListFooterBinding
 import com.starter.mvvm.databinding.ItemUserBinding
+import com.starter.mvvm.utils.RetryListener
 import com.starter.mvvm.utils.base.BasePagedListAdapter
 
 class UserListAdapter(
     private val retryListener: RetryListener,
-    private val onItemClicked: (user: User) -> Unit,
+    private val onItemClicked: (user: User?) -> Unit,
 ) :
     BasePagedListAdapter<User>(DIFF_CALLBACK) {
 
@@ -71,6 +71,9 @@ class UserListAdapter(
         fun bind(item: User?) {
             with(binding) {
                 tvName.text = item?.first_name
+                this.root.setOnClickListener {
+                    onItemClicked.invoke(item)
+                }
             }
         }
     }

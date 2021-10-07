@@ -15,4 +15,6 @@ open class ErrorResponse<D> {
 
     @field:SerializedName("errors")
     val errors: Map<String, List<String>>? = null
+
+    var showOnlyErrorMsg: Boolean = false
 }
