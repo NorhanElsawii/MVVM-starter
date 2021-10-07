@@ -32,10 +32,12 @@ inline fun <reified T : Any> Context.launchActivities(
 ) {
     val intent = newIntent<T>(this)
     intent.init()
-    startActivities(ArrayList<Intent>().also {
-        it.addAll(stackIntents)
-        it.add(intent)
-    }.toTypedArray())
+    startActivities(
+        ArrayList<Intent>().also {
+            it.addAll(stackIntents)
+            it.add(intent)
+        }.toTypedArray()
+    )
 }
 
 inline fun <reified T : Any> Fragment.launchActivityForResult(

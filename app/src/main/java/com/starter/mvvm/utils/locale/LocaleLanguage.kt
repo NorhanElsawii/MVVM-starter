@@ -2,7 +2,6 @@ package com.starter.mvvm.utils.locale
 
 import java.util.*
 
-
 sealed class LocaleLanguage {
     object Arabic : LocaleLanguage() {
         fun getId(): String = "ar"

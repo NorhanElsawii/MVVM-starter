@@ -22,9 +22,12 @@ class UserListAdapter(
                 ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
             else -> FooterViewHolder(
-                ItemPagedListFooterBinding.inflate(LayoutInflater.from(parent.context),
+                ItemPagedListFooterBinding.inflate(
+                    LayoutInflater.from(parent.context),
                     parent,
-                    false), retryListener
+                    false
+                ),
+                retryListener
             )
         }
     }
@@ -42,7 +45,6 @@ class UserListAdapter(
         else
             FOOTER_VIEW_TYPE
     }
-
 
     companion object {
         var DIFF_CALLBACK: DiffUtil.ItemCallback<User> =

@@ -48,7 +48,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             when (it) {
                 is Status.Loading -> {
                     binding.btnRetry.visibility = View.GONE
-                    //show shimmer or custom loading
+                    // show shimmer or custom loading
                     showDialogLoading()
                 }
                 is Status.LoadingMore -> handleLoadingMore()
@@ -90,7 +90,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             }
         }) {
             DetailsActivity.start(
-                this, it?.id ?: -1, requireNotNull(activityResultLauncher))
+                this, it?.id ?: -1, requireNotNull(activityResultLauncher)
+            )
         }
         binding.rvUsers.adapter = adapter
         binding.rvUsers.itemAnimator = null
@@ -110,7 +111,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     private fun handleSuccess(list: List<User>?) {
         hideDialogLoading()
-        //handle if no data
+        // handle if no data
     }
-
 }

@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.pm.PackageInfoCompat
 import com.starter.mvvm.utils.Constants
 
-
 /**
  * Created by Norhan Elsawi on 4/10/2021.
  */

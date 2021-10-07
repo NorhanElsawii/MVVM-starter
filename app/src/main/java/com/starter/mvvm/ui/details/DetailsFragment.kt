@@ -27,7 +27,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
         observe(viewModel.status) {
             when (it) {
                 is Status.Loading -> {
-                    //show shimmer or custom loading
+                    // show shimmer or custom loading
                     showDialogLoading()
                 }
                 is Status.Success<*> -> handleSuccess((it.data as BaseResponse<User>).data)

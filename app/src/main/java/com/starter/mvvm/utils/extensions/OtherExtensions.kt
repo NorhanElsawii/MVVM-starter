@@ -29,7 +29,7 @@ fun <T> String?.toObjectFromJson(type: Type): T = Gson().fromJson(this, type)
 fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L?, body: (T) -> Unit) =
     liveData?.observe(this, Observer(body))
 
-//only error response read one Time, The second time you read return null
+// only error response read one Time, The second time you read return null
 fun <D> Throwable.getErrorResponse(): ErrorResponse<D>? {
     return if (this is HttpException) {
         return try {
@@ -117,6 +117,3 @@ inline fun <reified T> List<T>.isEqual(second: List<T>): Boolean {
     }
     return this.toTypedArray() contentEquals second.toTypedArray()
 }
-
-
-

@@ -3,7 +3,6 @@ package com.starter.mvvm.utils.extensions
 import android.os.Bundle
 import com.starter.mvvm.data.remote.entites.User
 
-
 private const val EXTRA_ID = "EXTRA_ID"
 var Bundle.id: Int
     get() = getInt(EXTRA_ID, -1)
@@ -17,8 +16,3 @@ var Bundle.user: User?
     set(value) {
         putString(EXTRA_USER, value.toJsonString())
     }
-
-
-
-
-

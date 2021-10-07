@@ -14,7 +14,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-
 /**
  * Created by Norhan Elsawi on 4/10/2021.
  */
@@ -67,7 +66,6 @@ abstract class BaseViewModel(private val repository: BaseRepository) : ViewModel
                 )
             )
     }
-
 
     fun getCurrentLanguage() = repository.getCurrentLanguage()
 

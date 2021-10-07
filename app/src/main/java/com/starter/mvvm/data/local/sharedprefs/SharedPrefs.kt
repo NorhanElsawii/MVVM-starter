@@ -178,7 +178,6 @@ class SharedPrefs(private val pref: SharedPreferences) {
         } else null
     }
 
-
     /**
      * Clear data.
      */

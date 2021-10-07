@@ -43,7 +43,6 @@ object LocaleHelper {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             updateResources(context, language)
         } else updateResourcesLegacy(context, language)
-
     }
 
     private fun getPersistedData(context: Context): String {

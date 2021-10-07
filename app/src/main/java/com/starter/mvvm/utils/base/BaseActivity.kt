@@ -8,7 +8,6 @@ import com.starter.mvvm.databinding.ActivityCommonBinding
 import com.starter.mvvm.utils.locale.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 
-
 /**
  * Created by Norhan Elsawi on 10/04/2021.
  */

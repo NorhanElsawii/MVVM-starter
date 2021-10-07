@@ -29,7 +29,6 @@ abstract class BaseListFooterViewHolder(
             lTryAgain.llRetry.setOnClickListener {
                 retryListener.onRetry()
             }
-
         }
     }
 }

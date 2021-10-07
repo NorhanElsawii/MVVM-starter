@@ -12,7 +12,6 @@ class LocalDataUtils @Inject constructor(@ApplicationContext private val context
     @Inject
     lateinit var connectivityUtils: ConnectivityUtils
 
-
     fun isNetworkConnected() = connectivityUtils.isConnectedToNetwork()
 
     fun getString(id: Int): String {

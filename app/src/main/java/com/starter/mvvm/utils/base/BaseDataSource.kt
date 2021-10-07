@@ -35,43 +35,43 @@ abstract class BaseDataSource<I>(
     ) {
         setRetry(retryAction)
         when {
-            repository.isNetworkConnected() -> addSubscription(single
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {
-                    if (isLoadMore)
-                        status.postValue(Status.LoadingMore)
-                    else
-                        status.postValue(Status.Loading)
-                }
-                .subscribe({ response ->
-                    if (isLoadMore)
-                        status.postValue(Status.SuccessLoadingMore)
-                    else
-                        status.postValue(Status.Success(response))
-                    callBack(response.data)
-                    setRetry(null)
-
-                }, { error ->
-                    val errorResponse = error.getErrorResponse<E>()
-                    if (errorResponse != null) {
+            repository.isNetworkConnected() -> addSubscription(
+                single
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe {
                         if (isLoadMore)
-                            status.postValue(
-                                Status.ErrorLoadingMore(
-                                    errorResponse
-                                )
-                            )
+                            status.postValue(Status.LoadingMore)
                         else
-                            status.postValue(
-                                Status.Error(
-                                    errorResponse
+                            status.postValue(Status.Loading)
+                    }
+                    .subscribe({ response ->
+                        if (isLoadMore)
+                            status.postValue(Status.SuccessLoadingMore)
+                        else
+                            status.postValue(Status.Success(response))
+                        callBack(response.data)
+                        setRetry(null)
+                    }, { error ->
+                        val errorResponse = error.getErrorResponse<E>()
+                        if (errorResponse != null) {
+                            if (isLoadMore)
+                                status.postValue(
+                                    Status.ErrorLoadingMore(
+                                        errorResponse
+                                    )
                                 )
-                            )
-                    } else if (isLoadMore)
-                        setErrorLoadingMoreWithEmptyErrorResponse<E>(R.string.some_thing_went_wrong_error_msg)
-                    else
-                        setErrorWithEmptyErrorResponse<E>(R.string.some_thing_went_wrong_error_msg)
-                })
+                            else
+                                status.postValue(
+                                    Status.Error(
+                                        errorResponse
+                                    )
+                                )
+                        } else if (isLoadMore)
+                            setErrorLoadingMoreWithEmptyErrorResponse<E>(R.string.some_thing_went_wrong_error_msg)
+                        else
+                            setErrorWithEmptyErrorResponse<E>(R.string.some_thing_went_wrong_error_msg)
+                    })
             )
             isLoadMore -> setErrorLoadingMoreWithEmptyErrorResponse<E>(R.string.check_internet_connection)
             else -> setErrorWithEmptyErrorResponse<E>(R.string.check_internet_connection)
@@ -94,7 +94,7 @@ abstract class BaseDataSource<I>(
         retry = action
     }
 
-    //isForce = true invalidate the view if no network (case search)
+    // isForce = true invalidate the view if no network (case search)
     // isForce = false show only network error
     fun invalidate(isForce: Boolean = false) {
         if (isForce)
@@ -112,18 +112,26 @@ abstract class BaseDataSource<I>(
     }
 
     private fun <E> setErrorWithEmptyErrorResponse(msg: Int, showOnlyErrorMsg: Boolean = false) {
-        status.postValue(Status.Error(ErrorResponse<E>().also {
-            it.message =
-                repository.getString(msg)
-            it.showOnlyErrorMsg = showOnlyErrorMsg
-        }))
+        status.postValue(
+            Status.Error(
+                ErrorResponse<E>().also {
+                    it.message =
+                        repository.getString(msg)
+                    it.showOnlyErrorMsg = showOnlyErrorMsg
+                }
+            )
+        )
     }
 
     private fun <E> setErrorLoadingMoreWithEmptyErrorResponse(msg: Int) {
-        status.postValue(Status.ErrorLoadingMore(ErrorResponse<E>().also {
-            it.message =
-                repository.getString(msg)
-        }))
+        status.postValue(
+            Status.ErrorLoadingMore(
+                ErrorResponse<E>().also {
+                    it.message =
+                        repository.getString(msg)
+                }
+            )
+        )
     }
 
     fun onCleared() {

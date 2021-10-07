@@ -16,7 +16,6 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.starter.mvvm.R
 import java.util.*
 
-
 /**
  * Created by Norhan Elsawi on 23/01/2020.
  */
@@ -40,7 +39,8 @@ fun ImageView.loadImage(
 }
 
 private fun getRequestBuilder(
-    context: Context, path: String?,
+    context: Context,
+    path: String?,
     @DrawableRes placeHolder: Int = R.drawable.ic_place_holder,
     success: () -> Unit = {},
     error: () -> Unit = {},
@@ -133,9 +133,8 @@ fun EditText.showCalender(
                 onDateSelected(it.timeInMillis)
                 this.setText(it.timeInMillis.toDate())
             }
-
-
-        }, year, month, day
+        },
+        year, month, day
     ).also {
         it.datePicker.maxDate = System.currentTimeMillis()
         it.show()

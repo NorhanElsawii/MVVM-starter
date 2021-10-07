@@ -132,7 +132,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     private fun showLoginDialog() {
-        //pass
+        // pass
     }
 
     fun <E> onError(error: Status.Error<E>, showErrorMsg: Boolean = true, handleError: () -> Unit) {
@@ -162,7 +162,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     private fun handleForceUpdate() {
-        //pas
+        // pas
     }
 
     private fun handleUnAuthorizedUser(code: Int) {
