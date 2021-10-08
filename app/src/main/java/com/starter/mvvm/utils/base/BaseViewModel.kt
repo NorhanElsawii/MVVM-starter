@@ -3,7 +3,6 @@ package com.starter.mvvm.utils.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.starter.mvvm.R
-import com.starter.mvvm.data.remote.BaseResponse
 import com.starter.mvvm.data.remote.ErrorResponse
 import com.starter.mvvm.utils.SingleLiveEvent
 import com.starter.mvvm.utils.Status
@@ -24,8 +23,8 @@ abstract class BaseViewModel(private val repository: BaseRepository) : ViewModel
     private val compositeDisposable = CompositeDisposable()
 
     fun <D, E> subscribe(
-        single: Single<BaseResponse<D>>,
-        status: MutableLiveData<Status>,
+        single: Single<D>,
+        status: MutableLiveData<Status<D, E>>,
     ) {
         if (repository.isNetworkConnected())
             compositeDisposable.add(

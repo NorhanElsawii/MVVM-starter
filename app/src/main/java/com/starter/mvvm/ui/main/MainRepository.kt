@@ -7,4 +7,6 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(private val userApiCall: UserApiCall) : BaseRepository() {
 
     fun getUsers(page: Int) = userApiCall.getUserList(page)
+
+    fun getUser(id: Int) = userApiCall.getUser(id)
 }

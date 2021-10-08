@@ -3,6 +3,8 @@ package com.starter.mvvm.ui.main
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.starter.mvvm.data.local.entities.ListAndFirstUser
+import com.starter.mvvm.data.remote.BaseResponse
 import com.starter.mvvm.data.remote.entites.User
 import com.starter.mvvm.ui.main.paging.MainDataSourceFactory
 import com.starter.mvvm.utils.Constants.PAGE_SIZE
@@ -17,7 +19,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     BaseViewModel(mainRepository) {
 
     var pagedList: LiveData<PagedList<User>>? = null
-    val status = SingleLiveEvent<Status>()
+    val status = SingleLiveEvent<Status<BaseResponse<ListAndFirstUser>, Any>>()
     private var factory: MainDataSourceFactory? = null
 
     fun initPagedList() {

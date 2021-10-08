@@ -7,8 +7,8 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import com.starter.mvvm.data.local.entities.ListAndFirstUser
 import com.starter.mvvm.data.remote.BaseResponse
-import com.starter.mvvm.data.remote.entites.User
 import com.starter.mvvm.databinding.FragmentMainBinding
 import com.starter.mvvm.ui.details.container.DetailsActivity
 import com.starter.mvvm.ui.main.adapter.UserListAdapter
@@ -52,13 +52,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
                     showDialogLoading()
                 }
                 is Status.LoadingMore -> handleLoadingMore()
-                is Status.Success<*> -> handleSuccess((it.data as BaseResponse<List<User>>).data)
+                is Status.Success<BaseResponse<ListAndFirstUser>> -> handleSuccess(it.data?.data)
                 is Status.SuccessLoadingMore -> handleSuccessLoadingMore()
-                is Status.Error<*> -> onError(it) {
+                is Status.Error<Any> -> onError(it) {
                     binding.btnRetry.visibility = View.VISIBLE
                     hideDialogLoading()
                 }
-                is Status.ErrorLoadingMore<*> -> onError(it) { handleErrorLoadingMore() }
+                is Status.ErrorLoadingMore<Any> -> onError(it) { handleErrorLoadingMore() }
             }
         }
         initViews()
@@ -109,8 +109,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         adapter?.setFooter(PagedListFooterType.Retry)
     }
 
-    private fun handleSuccess(list: List<User>?) {
+    private fun handleSuccess(data: ListAndFirstUser?) {
         hideDialogLoading()
         // handle if no data
+        showMsg(data?.user.toString())
     }
 }

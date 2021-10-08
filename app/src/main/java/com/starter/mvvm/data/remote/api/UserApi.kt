@@ -14,7 +14,10 @@ import retrofit2.http.Query
 interface UserApi {
 
     @GET(GET_USERS)
-    fun getUserList(@Query(PAGE) page: Int): Single<BaseResponse<List<User>>>
+    fun getUserList(
+        @Query(PAGE) page: Int,
+        @Query("per_page") perPage: Int = 12,
+    ): Single<BaseResponse<List<User>>>
 
     @GET(GET_USER)
     fun getUser(@Path(ID) id: Int): Single<BaseResponse<User>>

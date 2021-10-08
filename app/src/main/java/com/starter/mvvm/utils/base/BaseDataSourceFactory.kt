@@ -5,7 +5,7 @@ import androidx.paging.DataSource
 /**
  * Created by Norhan Elsawi on 10/06/2021.
  */
-abstract class BaseDataSourceFactory<I, DS : BaseDataSource<I>> :
+abstract class BaseDataSourceFactory<I, D, E, DS : BaseDataSource<I, D, E>> :
     DataSource.Factory<Int, I>() {
 
     private var dataSource: DS? = null

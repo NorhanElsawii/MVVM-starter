@@ -162,7 +162,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     private fun handleForceUpdate() {
-        // pas
+        // pass
     }
 
     private fun handleUnAuthorizedUser(code: Int) {

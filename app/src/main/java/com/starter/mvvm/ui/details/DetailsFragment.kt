@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import com.starter.mvvm.data.local.entities.TwoUsers
 import com.starter.mvvm.data.remote.BaseResponse
-import com.starter.mvvm.data.remote.entites.User
 import com.starter.mvvm.databinding.FragmentDetailsBinding
 import com.starter.mvvm.utils.Status
 import com.starter.mvvm.utils.base.BaseFragment
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBinding::inflate) {
 
     private val viewModel by viewModels<DetailsViewModel>()
-    private var user: User? = null
+    private var twoUsers: TwoUsers? = null
 
     override fun getCurrentViewModel() = viewModel
 
@@ -30,8 +30,8 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
                     // show shimmer or custom loading
                     showDialogLoading()
                 }
-                is Status.Success<*> -> handleSuccess((it.data as BaseResponse<User>).data)
-                is Status.Error<*> -> onError(it) {
+                is Status.Success<BaseResponse<TwoUsers>> -> handleSuccess(it.data?.data)
+                is Status.Error<Any> -> onError(it) {
                     hideDialogLoading()
                 }
             }
@@ -40,20 +40,20 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
 
     private fun initArguments() {
         arguments?.id?.let {
-            viewModel.getUser(it)
+            viewModel.getTwoUsers(it)
         }
     }
 
-    private fun handleSuccess(user: User?) {
+    private fun handleSuccess(twoUsers: TwoUsers?) {
         hideDialogLoading()
-        this.user = user
-        binding.tvDetails.text = user.toString()
+        this.twoUsers = twoUsers
+        binding.tvDetails.text = twoUsers.toString()
     }
 
     fun onBackPressed() {
         Intent().also { intent ->
             Bundle().also { bundle ->
-                bundle.user = user
+                bundle.user = twoUsers?.user2
                 intent.putExtras(bundle)
             }
             activity?.setResult(Activity.RESULT_OK, intent)

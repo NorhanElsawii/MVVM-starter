@@ -3,7 +3,6 @@ package com.starter.mvvm.utils.base
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.starter.mvvm.R
-import com.starter.mvvm.data.remote.BaseResponse
 import com.starter.mvvm.data.remote.ErrorResponse
 import com.starter.mvvm.utils.SingleLiveEvent
 import com.starter.mvvm.utils.Status
@@ -18,17 +17,17 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by Norhan Elsawi on 7/010/2021.
  */
-abstract class BaseDataSource<I>(
+abstract class BaseDataSource<I, D, E>(
     private val repository: BaseRepository,
-    private var status: MutableLiveData<Status>,
+    private var status: MutableLiveData<Status<D, E>>,
 ) :
     PageKeyedDataSource<Int, I>() {
 
     private val compositeDisposable = CompositeDisposable()
     private var retry: Action? = null
 
-    fun <D, E> subscribe(
-        single: Single<BaseResponse<D>>,
+    fun subscribe(
+        single: Single<D>,
         retryAction: Action?,
         callBack: (m: D?) -> Unit,
         isLoadMore: Boolean,
@@ -50,7 +49,7 @@ abstract class BaseDataSource<I>(
                             status.postValue(Status.SuccessLoadingMore)
                         else
                             status.postValue(Status.Success(response))
-                        callBack(response.data)
+                        callBack(response)
                         setRetry(null)
                     }, { error ->
                         val errorResponse = error.getErrorResponse<E>()
@@ -68,13 +67,13 @@ abstract class BaseDataSource<I>(
                                     )
                                 )
                         } else if (isLoadMore)
-                            setErrorLoadingMoreWithEmptyErrorResponse<E>(R.string.some_thing_went_wrong_error_msg)
+                            setErrorLoadingMoreWithEmptyErrorResponse(R.string.some_thing_went_wrong_error_msg)
                         else
-                            setErrorWithEmptyErrorResponse<E>(R.string.some_thing_went_wrong_error_msg)
+                            setErrorWithEmptyErrorResponse(R.string.some_thing_went_wrong_error_msg)
                     })
             )
-            isLoadMore -> setErrorLoadingMoreWithEmptyErrorResponse<E>(R.string.check_internet_connection)
-            else -> setErrorWithEmptyErrorResponse<E>(R.string.check_internet_connection)
+            isLoadMore -> setErrorLoadingMoreWithEmptyErrorResponse(R.string.check_internet_connection)
+            else -> setErrorWithEmptyErrorResponse(R.string.check_internet_connection)
         }
     }
 
@@ -100,7 +99,7 @@ abstract class BaseDataSource<I>(
         if (isForce)
             doInvalidate()
         else if (!repository.isNetworkConnected())
-            setErrorWithEmptyErrorResponse<Any>(R.string.check_internet_connection, true)
+            setErrorWithEmptyErrorResponse(R.string.check_internet_connection, true)
         else
             doInvalidate()
     }
@@ -111,7 +110,7 @@ abstract class BaseDataSource<I>(
         super.invalidate()
     }
 
-    private fun <E> setErrorWithEmptyErrorResponse(msg: Int, showOnlyErrorMsg: Boolean = false) {
+    private fun setErrorWithEmptyErrorResponse(msg: Int, showOnlyErrorMsg: Boolean = false) {
         status.postValue(
             Status.Error(
                 ErrorResponse<E>().also {
@@ -123,7 +122,7 @@ abstract class BaseDataSource<I>(
         )
     }
 
-    private fun <E> setErrorLoadingMoreWithEmptyErrorResponse(msg: Int) {
+    private fun setErrorLoadingMoreWithEmptyErrorResponse(msg: Int) {
         status.postValue(
             Status.ErrorLoadingMore(
                 ErrorResponse<E>().also {
